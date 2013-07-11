@@ -31,7 +31,7 @@ fullcontact-objc requires either [iOS 5.0](http://developer.apple.com/library/io
 ###Installation
 [CocoaPods](http://cocoapods.org) is the recommended way to add fullcontact-objc to your project.
 
-1. Add a pod entry for fullcontact-objc to your Podfile `pod 'fullcontact-objc', '~> 0.0.2'`
+1. Add a pod entry for fullcontact-objc to your Podfile `pod 'fullcontact-objc', '~> 1.0.0'`
 2. Install the pod(s) by running `pod install`.
 3. Include fullcontact-objc wherever you need it with `#import "FCAPI.h"` or any of it's subcategories.
 
@@ -80,6 +80,12 @@ failure:^(FCResponse *response, NSError *error) {
 To run fullcontact-objcTest, simply locate the `TestContstants.h` file in the fullcontact-objcTest project and insert your API key as the value for `kAPIKey`.  After doing this you can run tests for both iOS and OSX architectures.
 
 *Note that Card Reader tests only function for the iOS platform at this time.*
+
+##Need Help - No Problem!
+We're always available to help in any way we can.  Check out our [Support Page](http://support.fullcontact.com) to access our Knowledge Base or contact our Support group.
+
+##Got an Idea?
+We love ideas!  Submit your ideas, suggestions, or feedback on our [API Developer Forum](http://support.fullcontact.com/forums/187136-api-developer-forum) or fork our repo.  We review pull requests regularly and look forward to seeing what you come up with!
 
 ## License
 
