@@ -132,8 +132,8 @@ withMimeType:(NSString *)mimeType
     NSAssert(method, @"method cannot be nil");
     [self prepareCall:&parameters];
     [self setDefaultHeader:@"Content-Type" value:mimeType];
-    NSURLRequest *request = [self requestWithMethod:@"POST" path:[NSString stringWithFormat:kUrlFormat, _apiVersion, [NSString stringWithFormat:@"%@?%@", method, [parameters urlEncodedString]]] parameters:nil data:[self serializeData:data]];
-    
+    NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:[NSString stringWithFormat:kUrlFormat, _apiVersion, [NSString stringWithFormat:@"%@?%@", method, [parameters urlEncodedString]]] parameters:nil data:[self serializeData:data]];
+    [request setTimeoutInterval:300];
     AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self processSuccess:responseObject forOperation:operation withSuccessBlock:success];
         [self restoreDefaultState];
@@ -153,13 +153,14 @@ withMultipartData:(NSArray*)multiPartRepresentations
     NSAssert(method, @"method cannot be nil");
     [self prepareCall:&parameters];
     
-    NSURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:[NSString stringWithFormat:kUrlFormat, _apiVersion, method] parameters:parameters constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
+    NSMutableURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:[NSString stringWithFormat:kUrlFormat, _apiVersion, method] parameters:parameters constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
         for (FCMultipartRepresentation *multipartRepresentation in multiPartRepresentations)
         {
             if (multipartRepresentation.data)
                 [formData appendPartWithFileData:multipartRepresentation.data name:multipartRepresentation.name fileName:multipartRepresentation.filename mimeType:multipartRepresentation.mimeType];
         }
     }];
+    [request setTimeoutInterval:300];
     
     AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self processSuccess:responseObject forOperation:operation withSuccessBlock:success];
