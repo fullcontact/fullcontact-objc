@@ -203,7 +203,6 @@
 
 /* Begin PBXFileReference section */
 		0A306F78F8FC4228AA5387BB /* libPods-libFullContact.a.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-libFullContact.a.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		180B4D10D9EB4E56A2984F8F /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		19F25E66F35D4AD1B910AE57 /* ../Pods/Pods-libFullContact.a.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "../Pods/Pods-libFullContact.a.xcconfig"; sourceTree = SOURCE_ROOT; };
 		23FD953296994A5FB457199A /* ../Pods/Pods-FullContact.framework.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "../Pods/Pods-FullContact.framework.xcconfig"; sourceTree = SOURCE_ROOT; };
 		2BBD8CAFCE4A41C98C1C285D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -356,7 +355,6 @@
 				C6ADB940161B5B5A0092602D /* fullcontact-objcTests */,
 				C6ADB928161B5B5A0092602D /* Frameworks */,
 				C6ADB927161B5B5A0092602D /* Products */,
-				180B4D10D9EB4E56A2984F8F /* Pods.xcconfig */,
 				23FD953296994A5FB457199A /* ../Pods/Pods-FullContact.framework.xcconfig */,
 				19F25E66F35D4AD1B910AE57 /* ../Pods/Pods-libFullContact.a.xcconfig */,
 			);
@@ -1096,12 +1094,25 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 19F25E66F35D4AD1B910AE57 /* ../Pods/Pods-libFullContact.a.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				DSTROOT = /tmp/fullcontact_objc.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "fullcontact-objc/fullcontact-objc-Prefix.pch";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-ObjC",
+				);
 				PRODUCT_NAME = FullContact;
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -1109,12 +1120,25 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 19F25E66F35D4AD1B910AE57 /* ../Pods/Pods-libFullContact.a.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				DSTROOT = /tmp/fullcontact_objc.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "fullcontact-objc/fullcontact-objc-Prefix.pch";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-ObjC",
+				);
 				PRODUCT_NAME = FullContact;
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};

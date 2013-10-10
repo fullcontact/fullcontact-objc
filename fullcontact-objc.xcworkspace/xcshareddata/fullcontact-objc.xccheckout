@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8B68A870-B23E-4D99-AED6-B451771D254B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>fullcontact-objc</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D2488A05-220F-4886-A54B-ECE7D6769B3D</key>
+		<string>git://github.com/fullcontact/fullcontact-objc</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>fullcontact-objc.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D2488A05-220F-4886-A54B-ECE7D6769B3D</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>git://github.com/fullcontact/fullcontact-objc</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D2488A05-220F-4886-A54B-ECE7D6769B3D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D2488A05-220F-4886-A54B-ECE7D6769B3D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>fullcontact-objc</string>
+		</dict>
+	</array>
+</dict>
+</plist>
