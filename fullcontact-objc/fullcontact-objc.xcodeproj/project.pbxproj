@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		389E27D5291E43D8ADEA8943 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BBD8CAFCE4A41C98C1C285D /* libPods.a */; };
 		65D78F51D8AD409E81D57DB2 /* libPods-libFullContact.a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A306F78F8FC4228AA5387BB /* libPods-libFullContact.a.a */; };
 		8CA6C93BFFF64F3B852DB62E /* libPods-FullContact.framework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D15C32A9550940B5898241DD /* libPods-FullContact.framework.a */; };
 		C608903C165BF79F008394FA /* FCAPI+Stats.h in Headers */ = {isa = PBXBuildFile; fileRef = C608903A165BF79F008394FA /* FCAPI+Stats.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -315,7 +314,6 @@
 				C6ADB92A161B5B5A0092602D /* Foundation.framework in Frameworks */,
 				C6ADB9B5161B61BB0092602D /* SystemConfiguration.framework in Frameworks */,
 				C6ADB9D0161B853B0092602D /* UIKit.framework in Frameworks */,
-				389E27D5291E43D8ADEA8943 /* libPods.a in Frameworks */,
 				65D78F51D8AD409E81D57DB2 /* libPods-libFullContact.a.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
