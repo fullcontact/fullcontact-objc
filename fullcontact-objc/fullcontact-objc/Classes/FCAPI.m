@@ -58,14 +58,12 @@
 
 - (void)prepareCall:(NSDictionary **)parameters
 {
-    if (!(*parameters)) {
-        *parameters = @{@"apiKey":_apiKey};
-    } else {
-        NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:*parameters];
-        [mutableParameters setValue:_apiKey forKey:@"apiKey"];
-        *parameters = mutableParameters;
-    }
+	
+	NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:*parameters];
+	*parameters = mutableParameters;
+	
     [super setDefaultHeader:@"X-FC-CRID" value:[self uuidString]];
+	[super setDefaultHeader:@"X-FullContact-APIKey" value:_apiKey];
 }
 
 - (NSString *)uuidString {
@@ -76,9 +74,9 @@
 }
 
 -(void)get:(NSString*)method
-   withParameters:(NSDictionary*)parameters
-          success:(FCSuccessBlock)success
-          failure:(FCFailureBlock)failure
+withParameters:(NSDictionary*)parameters
+   success:(FCSuccessBlock)success
+   failure:(FCFailureBlock)failure
 {
     NSAssert(method, @"method cannot be nil");
     [self prepareCall:&parameters];
@@ -90,9 +88,9 @@
 }
 
 -(void)post:(NSString*)method
-   withParameters:(NSDictionary*)parameters
-          success:(FCSuccessBlock)success
-          failure:(FCFailureBlock)failure
+withParameters:(NSDictionary*)parameters
+	success:(FCSuccessBlock)success
+	failure:(FCFailureBlock)failure
 {
     NSAssert(method, @"method cannot be nil");
     [self prepareCall:&parameters];
@@ -172,7 +170,7 @@ withMultipartData:(NSArray*)multiPartRepresentations
 
 - (void)put:(NSString *)method
  parameters:(NSDictionary *)parameters
-     success:(FCSuccessBlock)success
+	success:(FCSuccessBlock)success
     failure:(FCFailureBlock)failure
 {
     NSAssert(method, @"method cannot be nil");
@@ -258,7 +256,7 @@ withMultipartData:(NSArray*)multiPartRepresentations
 	if (failureBlock) {
         NSError *jsonError = nil;
         id response = nil;
-        if (operation.responseData) 
+        if (operation.responseData)
             response = [NSJSONSerialization JSONObjectWithData:[operation responseData] options:kNilOptions error:&jsonError];
         FCResponse *fcResponse = [[FCResponse alloc] initWithStatus:operation.response.statusCode andCrid: [[operation.request allHTTPHeaderFields] objectForKey:@"X-FC-CRID"] andResponse:response];
 		failureBlock(fcResponse, error);
