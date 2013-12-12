@@ -62,7 +62,7 @@
 {
     
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-[self get:ENDPOINT_CARDSHARK withParameters:@{@"page": [NSString stringWithFormat:@"%d", page]} success:success failure:failure];
+[self get:ENDPOINT_CARDSHARK withParameters:@{@"page": [NSString stringWithFormat:@"%ld", (long)page]} success:success failure:failure];
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
 [self get:ENDPOINT_CARDSHARK withParameters:@{@"page": [NSString stringWithFormat:@"%ld", page]} success:success failure:failure];
 #endif
