@@ -202,8 +202,6 @@
 
 /* Begin PBXFileReference section */
 		0A306F78F8FC4228AA5387BB /* libPods-libFullContact.a.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-libFullContact.a.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		19F25E66F35D4AD1B910AE57 /* ../Pods/Pods-libFullContact.a.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "../Pods/Pods-libFullContact.a.xcconfig"; sourceTree = SOURCE_ROOT; };
-		23FD953296994A5FB457199A /* ../Pods/Pods-FullContact.framework.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "../Pods/Pods-FullContact.framework.xcconfig"; sourceTree = SOURCE_ROOT; };
 		2BBD8CAFCE4A41C98C1C285D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C608903A165BF79F008394FA /* FCAPI+Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FCAPI+Stats.h"; sourceTree = "<group>"; };
 		C608903B165BF79F008394FA /* FCAPI+Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FCAPI+Stats.m"; sourceTree = "<group>"; };
@@ -353,8 +351,6 @@
 				C6ADB940161B5B5A0092602D /* fullcontact-objcTests */,
 				C6ADB928161B5B5A0092602D /* Frameworks */,
 				C6ADB927161B5B5A0092602D /* Products */,
-				23FD953296994A5FB457199A /* ../Pods/Pods-FullContact.framework.xcconfig */,
-				19F25E66F35D4AD1B910AE57 /* ../Pods/Pods-libFullContact.a.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -667,7 +663,7 @@
 		C6ADB91D161B5B5A0092602D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = FullContact;
 			};
 			buildConfigurationList = C6ADB920161B5B5A0092602D /* Build configuration list for PBXProject "fullcontact-objc" */;
@@ -944,9 +940,7 @@
 /* Begin XCBuildConfiguration section */
 		C660850D1623339B0018A264 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 23FD953296994A5FB457199A /* ../Pods/Pods-FullContact.framework.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -970,9 +964,7 @@
 		};
 		C660850E1623339B0018A264 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 23FD953296994A5FB457199A /* ../Pods/Pods-FullContact.framework.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -996,9 +988,7 @@
 		};
 		C66085101623339B0018A264 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 23FD953296994A5FB457199A /* ../Pods/Pods-FullContact.framework.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -1016,9 +1006,7 @@
 		};
 		C66085111623339B0018A264 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 23FD953296994A5FB457199A /* ../Pods/Pods-FullContact.framework.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
@@ -1057,7 +1045,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1090,9 +1078,7 @@
 		};
 		C6ADB94C161B5B5B0092602D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 19F25E66F35D4AD1B910AE57 /* ../Pods/Pods-libFullContact.a.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				DSTROOT = /tmp/fullcontact_objc.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "fullcontact-objc/fullcontact-objc-Prefix.pch";
@@ -1116,9 +1102,7 @@
 		};
 		C6ADB94D161B5B5B0092602D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 19F25E66F35D4AD1B910AE57 /* ../Pods/Pods-libFullContact.a.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				DSTROOT = /tmp/fullcontact_objc.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "fullcontact-objc/fullcontact-objc-Prefix.pch";
@@ -1142,7 +1126,6 @@
 		};
 		C6ADB94F161B5B5B0092602D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 19F25E66F35D4AD1B910AE57 /* ../Pods/Pods-libFullContact.a.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1160,7 +1143,6 @@
 		};
 		C6ADB950161B5B5B0092602D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 19F25E66F35D4AD1B910AE57 /* ../Pods/Pods-libFullContact.a.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				FRAMEWORK_SEARCH_PATHS = (

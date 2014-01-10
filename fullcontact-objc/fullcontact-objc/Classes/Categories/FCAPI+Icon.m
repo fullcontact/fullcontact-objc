@@ -46,7 +46,7 @@
     [self setDefaultHeader:@"Content-Type" value:@"image/png"];
     
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-        NSString *method = [NSString stringWithFormat:@"%@/%@/%@/%d/%@", self.apiVersion, ENDPOINT_ICON, typeId, size, style];
+        NSString *method = [NSString stringWithFormat:@"%@/%@/%@/%ld/%@", self.apiVersion, ENDPOINT_ICON, typeId, (long)size, style];
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
         NSString *method = [NSString stringWithFormat:@"%@/%@/%@/%ld/%@", self.apiVersion, ENDPOINT_ICON, typeId, size, style];
 #endif

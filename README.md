@@ -29,10 +29,9 @@ Currently this library has support for the following FullContact endpoints:
 fullcontact-objc requires either [iOS 5.0](http://developer.apple.com/library/ios/#releasenotes/General/WhatsNewIniPhoneOS/Articles/iPhoneOS4.html) and above, or [Mac OS 10.7](http://developer.apple.com/library/mac/#releasenotes/MacOSX/WhatsNewInOSX/Articles/MacOSX10_6.html#//apple_ref/doc/uid/TP40008898-SW7) ([64-bit with modern Cocoa runtime](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtVersionsPlatforms.html)) and above.
 
 ###Installation
-[CocoaPods](http://cocoapods.org) is the recommended way to add fullcontact-objc to your project.
 
-1. Add a pod entry for fullcontact-objc to your Podfile `pod 'fullcontact-objc', '~> 1.0.0'`
-2. Install the pod(s) by running `pod install`.
+1. Add fullcontact-objc as a git submodule to your project.
+2. Add [AFNetworking](https://github.com/AFNetworking/AFNetworking) as a submodule to your project and switch to the [1.x branch](https://github.com/AFNetworking/AFNetworking/tree/1.x).
 3. Include fullcontact-objc wherever you need it with `#import "FCAPI.h"` or any of it's subcategories.
 
 ### ARC
