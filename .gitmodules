@@ -1,0 +1,3 @@
+[submodule "fullcontact-objc/fullcontact-objc/Libs/AFNetworking"]
+	path = fullcontact-objc/fullcontact-objc/Libs/AFNetworking
+	url = https://github.com/AFNetworking/AFNetworking.git
