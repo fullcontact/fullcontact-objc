@@ -26,7 +26,6 @@
 
 #import "FCAPI+CardReader.h"
 #import "FCResponse.h"
-#import "FCMultipartRepresentation.h"
 
 #import "APIOrchestrator.h"
 
