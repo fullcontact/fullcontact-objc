@@ -102,7 +102,7 @@
 
 - (void)testLookupPersonByPhoneAndCountryCode
 {
-    [[APIOrchestrator api] lookupByPhone:@"+44(0)7783866116" andCountryCode:@"GB" success:^(FCResponse *response) {
+    [[APIOrchestrator api] lookupByPhone:@"+44 1632 960063" andCountryCode:@"UK" success:^(FCResponse *response) {
         [[TestSemaphore sharedInstance] lift:@"testLookupPersonByPhoneAndCountryCode"];
         STAssertTrue(response.status == 200, @"HTTP Status Code should be 200");
         STAssertNotNil(response.response, @"Expected a Response");
