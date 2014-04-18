@@ -204,6 +204,7 @@
 		C6D3DD74178DF12A00522406 /* APIOrchestrator.h in Headers */ = {isa = PBXBuildFile; fileRef = C6D3DD71178DF12A00522406 /* APIOrchestrator.h */; };
 		C6D3DD75178DF12A00522406 /* APIOrchestrator.m in Sources */ = {isa = PBXBuildFile; fileRef = C6D3DD72178DF12A00522406 /* APIOrchestrator.m */; };
 		C6D3DD76178DF12A00522406 /* APIOrchestrator.m in Sources */ = {isa = PBXBuildFile; fileRef = C6D3DD72178DF12A00522406 /* APIOrchestrator.m */; };
+		FD7D1CA71901AC880024E5AF /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD7D1CA61901AC880024E5AF /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -327,6 +328,7 @@
 		C6D3DD71178DF12A00522406 /* APIOrchestrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIOrchestrator.h; sourceTree = "<group>"; };
 		C6D3DD72178DF12A00522406 /* APIOrchestrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIOrchestrator.m; sourceTree = "<group>"; };
 		D15C32A9550940B5898241DD /* libPods-FullContact.framework.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FullContact.framework.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD7D1CA61901AC880024E5AF /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -334,6 +336,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD7D1CA71901AC880024E5AF /* Security.framework in Frameworks */,
 				C6B6E3DD16559F3800A6FCA9 /* CoreServices.framework in Frameworks */,
 				C6608543162338AA0018A264 /* Cocoa.framework in Frameworks */,
 				C660854C162339030018A264 /* SystemConfiguration.framework in Frameworks */,
@@ -385,6 +388,7 @@
 		C6306F13161F9457008D5416 /* OSX Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FD7D1CA61901AC880024E5AF /* Security.framework */,
 				C6B6E3DB16559F2700A6FCA9 /* CoreServices.framework */,
 				C660854A162338D40018A264 /* SystemConfiguration.framework */,
 				C6608548162338CB0018A264 /* Foundation.framework */,
