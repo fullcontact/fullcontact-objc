@@ -11,7 +11,7 @@
 
 #define kAPIUrl @"https://api.fullcontact.com"
 
-#define kAPIKey @"INSERT YOUR FULLCONTACT API KEY HERE"
+#define kAPIKey @"9324a64a3b18180a"
 
 #define kAPIVersion @"v2"
 

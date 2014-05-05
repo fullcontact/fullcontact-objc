@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C6ADB936161B5B5A0092602D"
+               BlueprintIdentifier = "C66084FC1623339B0018A264"
                BuildableName = "fullcontact-objcTests.octest"
                BlueprintName = "fullcontact-objcTests"
                ReferencedContainer = "container:fullcontact-objc.xcodeproj">

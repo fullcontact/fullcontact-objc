@@ -36,14 +36,13 @@
 #define ENDPOINT_STATS @"stats.json"
 
 #import "AFNetworking.h"
-#import "AFHTTPClient.h"
 
 @class FCResponse;
 
 typedef void(^FCSuccessBlock)		(FCResponse* response);
 typedef void(^FCFailureBlock)		(FCResponse* response, NSError* error);
 
-@interface FCAPI : AFHTTPClient
+@interface FCAPI : AFHTTPRequestOperationManager
 
 @property (nonatomic, retain) NSString* apiVersion;
 @property (nonatomic, retain) NSString* apiKey;
@@ -52,8 +51,6 @@ typedef void(^FCFailureBlock)		(FCResponse* response, NSError* error);
 - (id)initWithBaseURL:(NSURL*)url
 		   andVersion:(NSString*)version
 			andAPIKey:(NSString*)apiKey;
-
-- (void)prepareCall:(NSDictionary **)parameters;
 
 -(void)get:(NSString*)method
 withParameters:(NSDictionary*)parameters
@@ -109,5 +106,7 @@ failure:(FCFailureBlock)failure;
 	 withFailureBlock:(FCFailureBlock)failureBlock;
 
 -(void)restoreDefaultState;
+
+-(void)setAuthHeaders;
 
 @end
