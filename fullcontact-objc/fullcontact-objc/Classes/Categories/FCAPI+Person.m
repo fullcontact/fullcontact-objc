@@ -114,7 +114,7 @@
               success:(FCSuccessBlock)success
               failure:(FCFailureBlock)failure
 {
-    [self setDefaultHeader:@"Accept" value:@"text/x-vcard"];
+    [self.requestSerializer setValue:@"text/x-vcard" forHTTPHeaderField:@"Accept"];
     [self post:ENDPOINT_PERSON_BY_VCARD withMimeType:@"text/x-vcard" parameters:nil data:vCard success:success failure:failure];
 }
 

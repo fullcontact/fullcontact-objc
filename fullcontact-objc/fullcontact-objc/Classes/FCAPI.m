@@ -32,8 +32,8 @@
 
 -(void)setUserAgent:(NSString *)userAgent
 {
-    _userAgent = userAgent;
-    [self setDefaultHeader:@"User-Agent" value:userAgent];
+  _userAgent = userAgent;
+  [self.requestSerializer setValue:userAgent forHTTPHeaderField:@"User-Agent"];
 }
 
 #pragma mark - init
@@ -48,22 +48,35 @@
     if (self != nil) {
         [self setApiKey:key];
         [self setApiVersion:version];
-        [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-        [self setDefaultHeader:@"Accept" value:@"application/json"];
-		[self setDefaultHeader:@"Content-Type" value:@"application/json"];
-        [self setParameterEncoding:AFFormURLParameterEncoding];
+        
+        self.responseSerializer = [AFCompoundResponseSerializer new]; //[AFJSONResponseSerializer new];
+        self.requestSerializer = [AFJSONRequestSerializer new];
+        
+        [self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     }
     return self;
 }
 
-- (void)prepareCall:(NSDictionary **)parameters
+#pragma mark -
+
+- (void)setAuthHeaders
 {
-	
-	NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:*parameters];
-	*parameters = mutableParameters;
-	
-    [super setDefaultHeader:@"X-FC-CRID" value:[self uuidString]];
-	[super setDefaultHeader:@"X-FullContact-APIKey" value:_apiKey];
+  [self.requestSerializer setValue:[self uuidString] forHTTPHeaderField:@"X-FC-CRID"];
+  [self.requestSerializer setValue:_apiKey forHTTPHeaderField:@"X-FullContact-APIKey"];
+}
+
+- (AFHTTPRequestOperation *)performOperationForRequest:(NSURLRequest *)request
+                                               success:(FCSuccessBlock)success
+                                               failure:(FCFailureBlock)failure
+{
+  AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self processSuccess:responseObject forOperation:operation withSuccessBlock:success];
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    [self processFailure:error forOperation:operation withFailureBlock:failure];
+  }];
+  [self.operationQueue addOperation:operation];
+  return operation;
 }
 
 - (NSString *)uuidString {
@@ -73,32 +86,36 @@
     return uuidStr;
 }
 
+- (NSString *)URLStringFromMethod:(NSString *)method
+{
+  return [[NSURL URLWithString:[NSString stringWithFormat:kUrlFormat, _apiVersion, method] relativeToURL:self.baseURL] absoluteString];
+}
+
+#pragma mark - GET
+
 -(void)get:(NSString*)method
 withParameters:(NSDictionary*)parameters
    success:(FCSuccessBlock)success
    failure:(FCFailureBlock)failure
 {
-    NSAssert(method, @"method cannot be nil");
-    [self prepareCall:&parameters];
-    [super getPath:[NSString stringWithFormat:kUrlFormat, _apiVersion, method] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		[self processSuccess:responseObject forOperation:operation withSuccessBlock:success];
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		[self processFailure:error forOperation:operation withFailureBlock:failure];
-	}];
+    [self setAuthHeaders];
+    NSMutableURLRequest *request = [self.requestSerializer
+                                    requestWithMethod:@"GET"
+                                    URLString:[self URLStringFromMethod:method]
+                                    parameters:parameters
+                                    error:nil];
+    
+    [self performOperationForRequest:request success:success failure:failure];
 }
+
+#pragma mark - POST
 
 -(void)post:(NSString*)method
 withParameters:(NSDictionary*)parameters
 	success:(FCSuccessBlock)success
 	failure:(FCFailureBlock)failure
 {
-    NSAssert(method, @"method cannot be nil");
-    [self prepareCall:&parameters];
-    [super postPath:[NSString stringWithFormat:kUrlFormat, _apiVersion, method] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		[self processSuccess:responseObject forOperation:operation withSuccessBlock:success];
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		[self processFailure:error forOperation:operation withFailureBlock:failure];
-	}];
+    [self post:method parameters:parameters data:nil success:success failure:failure];
 }
 
 - (void)post:(NSString *)method
@@ -107,16 +124,17 @@ withParameters:(NSDictionary*)parameters
      success:(FCSuccessBlock)success
      failure:(FCFailureBlock)failure
 {
-    NSAssert(method, @"method cannot be nil");
-    [self prepareCall:&parameters];
-    NSURLRequest *request = [self requestWithMethod:@"POST" path:[NSString stringWithFormat:kUrlFormat, _apiVersion, [NSString stringWithFormat:@"%@?%@", method, [parameters urlEncodedString]]] parameters:nil data:[self serializeData:data]];
-    
-    AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self processSuccess:responseObject forOperation:operation withSuccessBlock:success];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self processFailure:error forOperation:operation withFailureBlock:failure];
-    }];
-    [self enqueueHTTPRequestOperation:operation];
+    [self setAuthHeaders];
+    NSMutableURLRequest *request = [self.requestSerializer
+                                    requestWithMethod:@"POST"
+                                    URLString:[self URLStringFromMethod:method]
+                                    parameters:parameters
+                                    error:nil];
+    if (data) {
+      [request setHTTPBody:[self serializeData:data]];
+    }
+  
+    [self performOperationForRequest:request success:success failure:failure];
 }
 
 
@@ -127,19 +145,20 @@ withMimeType:(NSString *)mimeType
      success:(FCSuccessBlock)success
      failure:(FCFailureBlock)failure
 {
-    NSAssert(method, @"method cannot be nil");
-    [self prepareCall:&parameters];
-    [self setDefaultHeader:@"Content-Type" value:mimeType];
-    NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:[NSString stringWithFormat:kUrlFormat, _apiVersion, [NSString stringWithFormat:@"%@?%@", method, [parameters urlEncodedString]]] parameters:nil data:[self serializeData:data]];
+    [self setAuthHeaders];
+    [self.requestSerializer setValue:mimeType forHTTPHeaderField:@"Content-Type"];
+    
+    NSMutableURLRequest *request = [self.requestSerializer
+                                    requestWithMethod:@"POST"
+                                    URLString:[self URLStringFromMethod:method]
+                                    parameters:parameters
+                                    error:nil];
+    [request setHTTPBody:[self serializeData:data]];
     [request setTimeoutInterval:300];
-    AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self processSuccess:responseObject forOperation:operation withSuccessBlock:success];
-        [self restoreDefaultState];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self processFailure:error forOperation:operation withFailureBlock:failure];
-        [self restoreDefaultState];
-    }];
-    [self enqueueHTTPRequestOperation:operation];
+    
+    [self restoreDefaultState];
+    
+    [self performOperationForRequest:request success:success failure:failure];
 }
 
 - (void)post:(NSString *)method
@@ -148,38 +167,32 @@ withMultipartData:(NSArray*)multiPartRepresentations
      success:(FCSuccessBlock)success
      failure:(FCFailureBlock)failure
 {
-    NSAssert(method, @"method cannot be nil");
-    [self prepareCall:&parameters];
+    [self setAuthHeaders];
     
-    NSMutableURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:[NSString stringWithFormat:kUrlFormat, _apiVersion, method] parameters:parameters constructingBodyWithBlock: ^(id <AFMultipartFormData> formData) {
-        for (FCMultipartRepresentation *multipartRepresentation in multiPartRepresentations)
-        {
-            if (multipartRepresentation.data)
-                [formData appendPartWithFileData:multipartRepresentation.data name:multipartRepresentation.name fileName:multipartRepresentation.filename mimeType:multipartRepresentation.mimeType];
-        }
-    }];
-    [request setTimeoutInterval:300];
+    NSMutableURLRequest *request = [self.requestSerializer
+                                    multipartFormRequestWithMethod:@"POST"
+                                    URLString:[[NSURL URLWithString:[NSString stringWithFormat:kUrlFormat, _apiVersion, method] relativeToURL:self.baseURL] absoluteString]
+                                    parameters:parameters
+                                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                                      for (FCMultipartRepresentation *multipartRepresentation in multiPartRepresentations)
+                                      {
+                                        if (multipartRepresentation.data)
+                                          [formData appendPartWithFileData:multipartRepresentation.data name:multipartRepresentation.name fileName:multipartRepresentation.filename mimeType:multipartRepresentation.mimeType];
+                                      }
+                                    }
+                                    error:nil];
     
-    AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self processSuccess:responseObject forOperation:operation withSuccessBlock:success];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self processFailure:error forOperation:operation withFailureBlock:failure];
-    }];
-    [self enqueueHTTPRequestOperation:operation];
+    [self performOperationForRequest:request success:success failure:failure];
 }
+
+#pragma mark - PUT
 
 - (void)put:(NSString *)method
  parameters:(NSDictionary *)parameters
 	success:(FCSuccessBlock)success
     failure:(FCFailureBlock)failure
 {
-    NSAssert(method, @"method cannot be nil");
-    [self prepareCall:&parameters];
-    [super putPath:[NSString stringWithFormat:kUrlFormat, _apiVersion, method] parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-		[self processSuccess:JSON forOperation:operation withSuccessBlock:success];
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		[self processFailure:error forOperation:operation withFailureBlock:failure];
-	}];
+    [self put:method parameters:parameters data:nil success:success failure:failure];
 }
 
 - (void)put:(NSString *)method
@@ -188,43 +201,60 @@ withMultipartData:(NSArray*)multiPartRepresentations
     success:(FCSuccessBlock)success
     failure:(FCFailureBlock)failure
 {
-    NSAssert(method, @"method cannot be nil");
-    [self prepareCall:&parameters];
-    NSURLRequest *request = [self requestWithMethod:@"PUT" path:[NSString stringWithFormat:kUrlFormat, _apiVersion, method] parameters:parameters data:data];
-    AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self processSuccess:responseObject forOperation:operation withSuccessBlock:success];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self processFailure:error forOperation:operation withFailureBlock:failure];
-    }];
-    [self enqueueHTTPRequestOperation:operation];
+    [self setAuthHeaders];
+    
+    NSMutableURLRequest *request = [self.requestSerializer
+                                    requestWithMethod:@"PUT"
+                                    URLString:[self URLStringFromMethod:method]
+                                    parameters:parameters
+                                    error:nil];
+    if (data) {
+      [request setHTTPBody:data];
+    }
+  
+    [self performOperationForRequest:request success:success failure:failure];
 }
+
+#pragma mark - DELETE
 
 - (void)delete:(NSString *)method
     parameters:(NSDictionary *)parameters
        success:(FCSuccessBlock)success
        failure:(FCFailureBlock)failure
 {
-	NSAssert(method, @"method cannot be nil");
-    [self prepareCall:&parameters];
-    [super deletePath:[NSString stringWithFormat:kUrlFormat, _apiVersion, method] parameters:parameters success:^(AFHTTPRequestOperation *operation, id JSON) {
-		[self processSuccess:JSON forOperation:operation withSuccessBlock:success];
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		[self processFailure:error forOperation:operation withFailureBlock:failure];
-	}];
+    [self setAuthHeaders];
+    NSMutableURLRequest *request = [self.requestSerializer
+                                    requestWithMethod:@"DELETE"
+                                    URLString:[self URLStringFromMethod:method]
+                                    parameters:parameters
+                                    error:nil];
+    
+    [self performOperationForRequest:request success:success failure:failure];
 }
 
 
 
--(NSMutableURLRequest*)requestWithMethod:(NSString *)method
-                                    path:(NSString *)path
-                              parameters:(NSDictionary *)parameters
-									data:(NSData*)data
+-(AFHTTPRequestOperation *)requestWithMethod:(NSString *)method
+                                        path:(NSString *)path
+                                  parameters:(NSDictionary *)parameters
+                                        data:(NSData*)data
+                                     success:(FCSuccessBlock)success
+                                     failure:(FCFailureBlock)failure
 {
-    NSMutableURLRequest* request = [super requestWithMethod:method
-													   path:path
-												 parameters:parameters];
-    [request setHTTPBody:data];
-    return request;
+    [self setAuthHeaders];
+    
+    NSMutableURLRequest *request = [self.requestSerializer
+                                    requestWithMethod:@"PUT"
+                                    URLString:[self URLStringFromMethod:method]
+                                    parameters:parameters
+                                    error:nil];
+    if (data) {
+      [request setHTTPBody:data];
+    }
+    
+    return [self performOperationForRequest:request
+                                    success:success
+                                    failure:failure];
 }
 
 -(NSData*)serializeData:(id)obj
@@ -263,9 +293,9 @@ withMultipartData:(NSArray*)multiPartRepresentations
 	}
 }
 
+//TODO: does this method has to be public?
 -(void)restoreDefaultState {
-    [self setDefaultHeader:@"Content-Type" value:@"application/json"];
-    [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 }
 
 @end
