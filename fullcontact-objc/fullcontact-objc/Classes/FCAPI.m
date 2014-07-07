@@ -26,6 +26,14 @@
 
 #define kUrlFormat @"/%@/%@"
 
+@interface FCAPI ()
+
+@property BOOL shouldUseAccessToken;
+@property (nonatomic) NSString* accessToken;
+@property (nonatomic) NSString* apiKey;
+
+@end
+
 @implementation FCAPI
 
 #pragma mark - Custom property Setters
@@ -46,7 +54,7 @@
     
     self = [super initWithBaseURL:url];
     if (self != nil) {
-        [self setApiKey:key];
+        [self useAPIKey:key];
         [self setApiVersion:version];
         [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
         [self setDefaultHeader:@"Accept" value:@"application/json"];
@@ -54,6 +62,40 @@
         [self setParameterEncoding:AFFormURLParameterEncoding];
     }
     return self;
+}
+
+- (id)initWithBaseURL:(NSURL*)url
+		   andVersion:(NSString*)version
+{
+    NSAssert(url, @"url cannot be nil");
+    NSAssert(version, @"version cannot be nil");
+    
+    self = [super initWithBaseURL:url];
+    if (self != nil) {
+        [self setApiVersion:version];
+        [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
+        [self setDefaultHeader:@"Accept" value:@"application/json"];
+		[self setDefaultHeader:@"Content-Type" value:@"application/json"];
+        [self setParameterEncoding:AFFormURLParameterEncoding];
+    }
+    return self;
+}
+
+- (void) useAPIKey:(NSString*)apiKey
+{
+    _apiKey = apiKey;
+    _shouldUseAccessToken = NO;
+}
+
+- (void) useAccessToken:(NSString*)accessToken
+{
+    _accessToken = accessToken;
+    _shouldUseAccessToken = YES;
+}
+
+- (void)setAPIKey:(NSString*)apiKey
+{
+    [self useAPIKey:apiKey];
 }
 
 - (void)prepareCall:(NSDictionary **)parameters
