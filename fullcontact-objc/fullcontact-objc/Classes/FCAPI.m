@@ -102,10 +102,17 @@
 {
 	
 	NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:*parameters];
-	*parameters = mutableParameters;
 	
     [super setDefaultHeader:@"X-FC-CRID" value:[self uuidString]];
-	[super setDefaultHeader:@"X-FullContact-APIKey" value:_apiKey];
+    
+    if (_shouldUseAccessToken) {
+        [super setDefaultHeader:@"X-FullContact-AccessToken" value:_accessToken];
+        if (mutableParameters[@"accessToken" ])
+            [mutableParameters removeObjectForKey:@"accessToken"];
+        *parameters = mutableParameters;
+    } else {
+        [super setDefaultHeader:@"X-FullContact-APIKey" value:_apiKey];
+    }
 }
 
 - (NSString *)uuidString {
