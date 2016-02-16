@@ -93,22 +93,6 @@
     [self lookupByTwitter:twitterName parameters:nil success:success failure:failure];
 }
 
-- (void)lookupByFacebook:(NSString*)facebookUsername
-              parameters:(NSDictionary*)parameters
-                 success:(FCSuccessBlock)success
-                 failure:(FCFailureBlock)failure
-{
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    [mutableParameters setValue:facebookUsername forKey:@"facebookUsername"];
-    [self get:ENDPOINT_PERSON withParameters:mutableParameters success:success failure:failure];
-}
-
-- (void)lookupByFacebook:(NSString*)facebookUsername
-                 success:(FCSuccessBlock)success
-                 failure:(FCFailureBlock)failure
-{
-    [self lookupByFacebook:facebookUsername parameters:nil success:success failure:failure];
-}
 
 - (void)lookupByVCard:(NSData*)vCard
               success:(FCSuccessBlock)success

@@ -158,35 +158,6 @@
     [[TestSemaphore sharedInstance] waitForKey:@"testLookupPersonByTwitterWithQueue"];
 }
 
-- (void)testLookupPersonByFacebook
-{
-    [[APIOrchestrator api] lookupByFacebook:@"bart.lorang" success:^(FCResponse *response) {
-        [[TestSemaphore sharedInstance] lift:@"testLookupPersonByFacebook"];
-        STAssertTrue(response.status == 200, @"HTTP Status Code should be 200");
-        STAssertNotNil(response.response, @"Expected a Response");
-        STAssertNotNil(response.crid, @"Expected a Crid");
-    } failure:^(FCResponse *response, NSError *error) {
-        [[TestSemaphore sharedInstance] lift:@"testLookupPersonByFacebook"];
-        STAssertNil(error, [NSString stringWithFormat:@"%@",[(NSDictionary*)response.response valueForKey:@"message"]]);
-    }];
-    [[TestSemaphore sharedInstance] waitForKey:@"testLookupPersonByFacebook"];
-}
-
-- (void)testLookupPersonByFacebookWithQueue
-{
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@1, @"queue", nil];
-    [[APIOrchestrator api] lookupByFacebook:@"lorangb" parameters:parameters success:^(FCResponse *response) {
-        [[TestSemaphore sharedInstance] lift:@"testLookupPersonByFacebookWithQueue"];
-        STAssertTrue(response.status == 200 || response.status == 202, @"HTTP Status Code should be 200 or 202");
-        STAssertNotNil(response.response, @"Expected a Response");
-        STAssertNotNil(response.crid, @"Expected a Crid");
-    } failure:^(FCResponse *response, NSError *error) {
-        [[TestSemaphore sharedInstance] lift:@"testLookupPersonByFacebookWithQueue"];
-        STAssertNil(error, [NSString stringWithFormat:@"%@",[(NSDictionary*)response.response valueForKey:@"message"]]);
-    }];
-    [[TestSemaphore sharedInstance] waitForKey:@"testLookupPersonByFacebookWithQueue"];
-}
-
 - (void)testLookupPersonByVCard
 {
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://d1h3f0foa0xzdz.cloudfront.net/1700/2ZO2NJQ2172ZFBHO4CBLKVEBWS8XP8.vcf"]];

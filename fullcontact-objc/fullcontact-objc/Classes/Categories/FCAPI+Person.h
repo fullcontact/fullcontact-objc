@@ -60,15 +60,6 @@
                 success:(FCSuccessBlock)success
                 failure:(FCFailureBlock)failure;
 
-- (void)lookupByFacebook:(NSString*)facebookUsername
-              parameters:(NSDictionary*)parameters
-                 success:(FCSuccessBlock)success
-                 failure:(FCFailureBlock)failure;
-
-- (void)lookupByFacebook:(NSString*)facebookUsername
-                 success:(FCSuccessBlock)success
-                 failure:(FCFailureBlock)failure;
-
 - (void)lookupByVCard:(NSData*)vCard
               success:(FCSuccessBlock)success
               failure:(FCFailureBlock)failure;
