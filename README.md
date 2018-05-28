@@ -1,3 +1,8 @@
+
+Deprecated
+==
+This library is no longer actively maintained and may break at some point in the near future. 
+
 fullcontact-objc
 ================
 
@@ -7,7 +12,7 @@ Ever wanted to call FullContact's API from your own iOS or OS X application?  No
 fullcontact-objc is a library for iOS and Mac OS X. It's built on top of [AFNetworking](https://github.com/AFNetworking/AFNetworking) and provides connectivity to the [FullContact Developer API](http://www.fullcontact.com/developer/docs/) endpoints. 
 
 ###Why we love it…
-fullcontact-objc makes it painless to access the FullContact Developer API in your iOS or Mac OS X apps - in fact, we use it ourselves in our own apps such as [FullContact Card Reader](https://itunes.apple.com/us/app/fullcontact-business-card/id576780807?mt=8).  
+fullcontact-objc makes it painless to access the FullContact Developer API in your iOS or Mac OS X apps.
 
 Currently this library has support for the following FullContact endpoints:
 
